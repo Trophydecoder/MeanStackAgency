@@ -1,7 +1,7 @@
 var providers = require("../models/providers.models");
 const Provider = require("../db/db");
 const { ObjectId } = require("mongodb");
-const mongoose = require('mongoose')
+
 //CRUD OPERATIONS(CREATE(post),  READ(get),  UPDATE(put),  DELETE(delete))//
 
 //util functions//
@@ -40,8 +40,10 @@ module.exports.readAll = function (req, res) {
           res.status(404);
           res.send("List is empty,Nothing to read");
         }
+        else{
         res.status(200);
         res.send(result);
+      }
       })
       .catch((error) => handleError(res, error));
   } 
@@ -60,8 +62,10 @@ module.exports.readOne = function (req, res) {
           res.status(400);
           res.send("List is empty,Nothing to read");
         }
+        else{
         res.status(200);
         res.send(result);
+        }
       })
       .catch((error) => handleError(res, error));
   } catch (error) {
@@ -81,8 +85,10 @@ module.exports.update = function (req, res) {
           res.status(404);
           res.send("List is empty,We cannot update");
         }
+        else{
         res.status(200);
         res.send(result);
+        }
       })
       .catch((error) => handleError(res, error));
   } catch (error) {
@@ -95,14 +101,16 @@ module.exports.update = function (req, res) {
 module.exports.deleteOne = function (req, res) {
   try {
     let id = ObjectId.createFromHexString(req.params.id);
-    Provider.findOneAndDelete({ _id: id })
+    Provider.findOneAndDelete({ '_id': id })
       .then(result => {
         if (isEmptylist(result)) {
           res.status(404);
           res.send("List is empty Cannot delete");
         }
+        else{
         res.status(200);
         res.send(result);
+        }
       })
       .catch((error) => handleError(res, error));
   } catch (error) {
@@ -110,7 +118,7 @@ module.exports.deleteOne = function (req, res) {
   }
 };
 
-//url:/api/providers//
+//url:/api/providers//121
 module.exports.deleteAll = function (req, res) {
   try {
     Provider.deleteMany({})
@@ -119,8 +127,10 @@ module.exports.deleteAll = function (req, res) {
           res.status(404);
           res.send("List is empty Cannot delete");
         }
+        else{
         res.status(200);
         res.send("all providers deleted");
+      }
       })
       .catch(error => handleError(res, error));
   } catch (error) {
